@@ -1,0 +1,18 @@
+[package]
+name = "comments"
+version = "0.1.0"
+authors = ["omrihhh <0mri.d3v@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web="2.0.0"
+actix-rt="1.1.1"
+actix-web-httpauth = "0.4.1"
+sqlx = { version = "0.3.5", features = [ "postgres" ] }
+tera="1.2.0"
+serde="1.0.110"
+dotenv="0.15.0"
+anyhow="1.0.28"
+env_logger="0.7.1"

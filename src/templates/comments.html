@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>comments</title>
+</head>
+<body>
+  <h1>Comments Example</h1>
+  <p>
+    <h3>comments</h3>
+      <p>enter comment:</p> 
+      <input name="comment" id="comment">
+      <button type="button" onclick="comment()">Submit</button>
+    <br>
+    <br>
+    {% for comment in comments %}
+      {{ comment.comment }}  
+      <button type="button" onclick="deleteComment({{comment.id}})">delete</button>
+      <br>
+    {% endfor %}
+    
+  </p>
+
+  <script>
+
+    var content = document.getElementById("comment");
+    content.focus();
+    content.select();
+    content.addEventListener("keydown", function (e) {
+        if (e.keyCode === 13) {  //checks whether the pressed key is "Enter"
+            comment(e);
+        }
+    });
+
+    function deleteComment(id) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/api/delete", true);
+      xhr.setRequestHeader('Authorization', 'Bearer ' + 'example_token');
+      xhr.onreadystatechange = function() {
+          if (xhr.readyState == XMLHttpRequest.DONE) {
+            window.location.reload(false)
+          }
+      }
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+      xhr.send('id=' + id);
+      
+    }
+
+    function comment() {
+      var data = document.getElementById("comment").value; 
+      document.getElementById("comment").value = "";
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/api/comment", true);
+      xhr.setRequestHeader('Authorization', 'Bearer ' + 'example_token');
+      xhr.onreadystatechange = function() {
+          if (xhr.readyState == XMLHttpRequest.DONE) {
+            window.location.reload(false)
+          }
+      }
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+      xhr.send('comment=' + data);
+    }
+  </script>
+
+</body>
+</html>
